@@ -1,0 +1,9 @@
+{
+  "experimentalTernaries": true,
+  "experimentalOperatorPosition": "start",
+  "semi": false,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "bracketSpacing": false,
+  "arrowParens": "avoid"
+}
