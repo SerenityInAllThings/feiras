@@ -2,7 +2,7 @@ import { useState } from "preact/hooks"
 import { feiras, Feira } from "./feiras"
 
 export function App() {
-  const [day, setDay] = useState(new Date().getDay())
+  const [day] = useState(new Date().getDay())
   const initialFeira = feiras.find(feira => feira.weekday === day)
   const [feira, setFeira] = useState(initialFeira)
 
@@ -10,13 +10,13 @@ export function App() {
     <div className='w-screen h-screen flex flex-row'>
       <div className="w-[850px] h-full">
         <div className="h-[650px] w-full bg-amber-50">
-          {feira && <FeiraDisplay feira={feira} />}
+          {feira ? <FeiraDisplay feira={feira} /> : <p>Nenhuma feira selecionada</p>}
         </div>
         <div className="h-[calc(100%-650px)] w-full bg-amber-100">
-          something
+          {feira && <FeiraDetails feira={feira} />}
         </div>
       </div>
-      <div className="w-full h-full bg-amber-100">
+      <div className="w-full h-full bg-amber-100 pl-2">
         <FeirasSelector feiras={feiras} onFeiraChange={setFeira} />
       </div>
     </div>
@@ -28,6 +28,7 @@ const FeiraDisplay = ({ feira }: { feira: Feira }) => {
     <div className="w-full h-full flex flex-col p-2">
       <h2 className="font-bold text-xl">{feira.name}</h2>
       <div
+        id="feira-display"
         className="p-2"
         dangerouslySetInnerHTML={{ __html: feira.mapsUrl }} 
       />
@@ -35,12 +36,50 @@ const FeiraDisplay = ({ feira }: { feira: Feira }) => {
   )
 }
 
+const getWeekdayName = (weekday: number) => {
+  switch (weekday) {
+    case 0: return 'Domingo'
+    case 1: return 'Segunda'
+    case 2: return 'Terça'
+    case 3: return 'Quarta'
+    case 4: return 'Quinta'
+    case 5: return 'Sexta'
+    case 6: return 'Sábado'
+  }
+}
+
 const FeirasSelector = ({ feiras, onFeiraChange }: { feiras: Feira[], onFeiraChange: (feira: Feira) => void }) => {
+  const feirasPerWeekday = feiras.reduce((acc, feira) => {
+    const weekday = feira.weekday
+    acc[weekday].push(feira)
+    return acc
+  }, { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] } as Record<number, Feira[]>)
+  const weekNumbers = Object.keys(feirasPerWeekday).map(key => parseInt(key))
+
   return (
     <div className="w-full flex flex-col">
-      {feiras.map(feira => (
-        <FeiraSelectorItem key={feira.name} feira={feira} onSelect={() => onFeiraChange(feira)} />
-      ))}
+      {weekNumbers.map((weekday) => {
+        return (
+          <>
+            <h3 className="text-lg font-bold">{getWeekdayName(weekday)}</h3>
+            <div className="flex">
+              {feirasPerWeekday[weekday].length === 0 ? (
+                <div className="p-2">
+                  <p>Não há feiras neste dia :c</p>
+                </div>
+              ) : (
+                feirasPerWeekday[weekday].map((feira, index) => (
+                  <FeiraSelectorItem
+                    key={index}
+                    feira={feira}
+                    onSelect={() => onFeiraChange(feira)}
+                  />
+                ))
+              )}
+            </div>
+          </>
+        )
+      })}
     </div>
   )
 }
@@ -48,7 +87,29 @@ const FeirasSelector = ({ feiras, onFeiraChange }: { feiras: Feira[], onFeiraCha
 const FeiraSelectorItem = ({ feira, onSelect }: { feira: Feira, onSelect: () => void }) => {
   return (
     <div className="p-2">
-      <button onMouseDown={onSelect}>{feira.name}</button>
+      <button
+        className="rounded-md bg-amber-300 p-1 pl-2 pr-2"
+        onMouseDown={onSelect}
+      >
+        <p>{feira.name}</p>
+        <p className="float-left">{feira.startTime} - {feira.endTime}</p>
+      </button>
+    </div>
+  )
+}
+
+const FeiraDetails = ({ feira }: { feira: Feira }) => {
+  return (
+    <div className="w-full h-full flex flex-col p-2">
+      <h2 className="font-bold text-lg">{feira.name}</h2>
+      <p>Horário: {feira.startTime} - {feira.endTime}</p>
+      <p>Endereço: {feira.address}</p>
+      <button
+        className="rounded-md bg-amber-300 p-1 pl-2 pr-2 w-max"
+        onMouseDown={() => window.open(feira.moreDetailsUrl, '_blank')}
+      >
+        Mais detalhes
+      </button>
     </div>
   )
 }
