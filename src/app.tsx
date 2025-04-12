@@ -8,6 +8,19 @@ export function App() {
 
   return (
     <div className='w-screen h-screen flex flex-col'>
+      <div className={'w-screen h-12 bg-red flex flex-row'}>
+        <div className={'w-20 h-full flex justify-center items-center'}>
+        <img className='w-8 h-8' src="./assets/menu.svg" alt="" />
+        </div>
+        <div className='w-full h-12 bg-red text-4xl text-white text-start'>
+          <h1>Minha Feira</h1>
+        </div>
+      </div>
+      <div className='w-screen h-full'>
+      <img className='w-scren h-full' src="./assets/mapa.jpg" alt="" />
+      </div>
+    </div>
+    /* <div className='w-screen h-screen flex flex-col'>
       <div className='w-screen h-12 bg-rose flex  items-center'>
       <img className='w-8 h-8' src="./assets/menu.svg" alt="" />
       </div>
@@ -20,7 +33,7 @@ export function App() {
         </div>
       </div>
       <div className='w-screen h-full bg-red'></div>
-    </div>
+    </div> */
 
 
 /* --Tela das Feiras
