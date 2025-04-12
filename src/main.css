@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+
+@theme {
+    --color-red: #E35A5A;
+    --color-rose: #F9E2E2;
+}
