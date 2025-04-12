@@ -7,7 +7,23 @@ export function App() {
   const [feira, setFeira] = useState(initialFeira)
 
   return (
+    <div className='w-screen h-screen flex flex-col'>
+      <div className='w-screen h-12 bg-rose flex  items-center'>
+      <img className='w-8 h-8' src="./assets/menu.svg" alt="" />
+      </div>
+      <div className='w-screen h-40 bg-rose flex flex-col '>
+        <div className='h-1/3'>Feira de São Francisco</div>
+        <div className='h-1/3'>Endereço: R. DAVID CARNEIRO, S/N</div>
+        <div className='h-1/3 flex flex-row'>
+        <div className='w-1/2 flex justify-center'>a</div>
+        <div className='w-1/2'>b</div>
+        </div>
+      </div>
+      <div className='w-screen h-full bg-red'></div>
+    </div>
 
+
+/* --Tela das Feiras
     <div className='w-screen h-screen flex flex-col'>
       <div className='w-screen bg-rose h-12 flex flex-row'>
         <div className='w-20 h-12 bg-rose flex justify-center items-center'>
@@ -30,17 +46,19 @@ export function App() {
           )
         })}
       </div>
-    </div>
-    // <div className='w-screen h-screen flex flex-col bg-[url(./assets/feira.jpg)]'>
-    //   <div className='w-screen bg-black h-12 flex flex-row'>
-    //     <div className='w-20 h-12 bg-red flex justify-center items-center'>
-    //       <img className='w-8 h-8' src="./assets/menu.svg" alt="" />
-    //     </div>
-    //     <div className='w-full h-12 bg-red text-4xl text-white text-center'>
-    //       <h1>Minha Feira</h1>
-    //     </div>
-    //   </div>
+    </div> */
 
+    /* --Tela Inicial
+    <div className='w-screen h-screen flex flex-col bg-[url(./assets/feira.jpg)]'>
+      <div className='w-screen bg-black h-12 flex flex-row'>
+        <div className='w-20 h-12 bg-red flex justify-center items-center'>
+          <img className='w-8 h-8' src="./assets/menu.svg" alt="" />
+        </div>
+        <div className='w-full h-12 bg-red text-4xl text-white text-center'>
+          <h1>Minha Feira</h1>
+        </div>
+      </div>
+ */
 
     /* Original
     
